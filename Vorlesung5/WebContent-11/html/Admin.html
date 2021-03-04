@@ -1,0 +1,219 @@
+<!Doctype html>
+<html>
+<head>
+<title>Admin</title>
+<meta name="author" content="Ali Yürekkirmaz">
+<meta charset="UTF-8">
+	<link rel="stylesheet" href="../css/admin.css">
+
+
+
+</head>
+
+
+<body onload=display_ct();>
+
+<script type="text/javascript"> 
+	function display_c(){
+	var refresh = 1000; 
+	funtime = setTimeout('display_ct()',refresh)
+	}
+	
+	function display_ct() {
+		var x = new Date()
+		var Tag = x.getDate();
+		var Monat = x.getMonth();
+		var Jahr = x.getFullYear();
+		var Stunde = x.getHours();
+		var Minute = x.getMinutes();
+		if (Minute < 10) {
+			Minute = '0' + Minute;
+		}
+
+		var Monate = new Array("Januar", "Februar", "März", "April", "Mai",
+				"Juni", "Juli", "August", "September", "Oktober", "November",
+				"Dezember");
+		
+		var x1= Stunde + ":" + Minute + " Uhr";
+		var x2= "Heute ist der " + Tag + ". " + Monate[Monat] + " "
+		+ Jahr + "";
+		document.getElementById('p2').innerHTML = x1;
+		document.getElementById('p3').innerHTML = x2;
+		tt=display_c();
+		 }
+</script>
+
+	<header>
+	
+		<p id='p1'>Zeiterfassungssystem</p>
+		
+		<div id='d1' style="position:absolute; top:20px; left:40px;">
+		<canvas id="canvas" width="400" height="400">
+		</canvas>
+		<br>
+		<br>
+		<span id='p3' ></span> <br>
+		<span id='p2' ></span>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+	
+		
+	</header>
+
+	<nav>
+	<a id= 'a4' href="./Login.html">Zurück zur Startseite</a>
+	
+	<nav>
+		<a class = "aAdmin" href="./Kontoerstellen.html">Konto erstellen</a> 
+		<a class = "aAdmin" href="./Personbearbeiten.html">Konto bearbeiten</a> 
+		<a class = "aAdmin" href="./Personlöschen.html">Konto löschen</a> 
+		<a class = "aAdmin" href="./Reporting.html">Reporting</a> 
+		
+	</nav>
+	
+		<script>
+	<!-- https://www.w3schools.com/graphics/canvas_clock_start.asp-->
+	
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var radius = canvas.height / 2;
+		ctx.translate(radius, radius);
+		radius = radius * 0.90
+		setInterval(drawClock, 1000);
+		
+		function drawClock() {
+		  drawFace(ctx, radius);
+		  drawNumbers(ctx, radius);
+		  drawTime(ctx, radius);
+		}
+		
+		function drawFace(ctx, radius) {
+		  var grad;
+		  ctx.beginPath();
+		  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+		  ctx.fillStyle = 'white';
+		  ctx.fill();
+		  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+		  grad.addColorStop(0, '#333');
+		  grad.addColorStop(0.5, 'red');
+		  ctx.strokeStyle = grad;
+		  ctx.lineWidth = radius*0.1;
+		  ctx.stroke();
+		  ctx.beginPath();
+		  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+		  ctx.fillStyle = '#333';
+		  ctx.fill();
+		}
+		
+		function drawNumbers(ctx, radius) {
+		  var ang;
+		  var num;
+		  ctx.font = radius*0.15 + "px arial";
+		  ctx.textBaseline="middle";
+		  ctx.textAlign="center";
+		  for(num = 1; num < 13; num++){
+		    ang = num * Math.PI / 6;
+		    ctx.rotate(ang);
+		    ctx.translate(0, -radius*0.85);
+		    ctx.rotate(-ang);
+		    ctx.fillText(num.toString(), 0, 0);
+		    ctx.rotate(ang);
+		    ctx.translate(0, radius*0.85);
+		    ctx.rotate(-ang);
+		  }
+		}
+		
+		function drawTime(ctx, radius){
+		    var now = new Date();
+		    var hour = now.getHours();
+		    var minute = now.getMinutes();
+		    var second = now.getSeconds();
+		    //hour
+		    hour=hour%12;
+		    hour=(hour*Math.PI/6)+
+		    (minute*Math.PI/(6*60))+
+		    (second*Math.PI/(360*60));
+		    drawHand(ctx, hour, radius*0.5, radius*0.07);
+		    //minute
+		    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+		    drawHand(ctx, minute, radius*0.8, radius*0.07);
+		    // second
+		    second=(second*Math.PI/30);
+		    drawHand(ctx, second, radius*0.9, radius*0.02);
+		}
+		
+		function drawHand(ctx, pos, length, width) {
+		    ctx.beginPath();
+		    ctx.lineWidth = width;
+		    ctx.lineCap = "round";
+		    ctx.moveTo(0,0);
+		    ctx.rotate(pos);
+		    ctx.lineTo(0, -length);
+		    ctx.stroke();
+		    ctx.rotate(-pos);
+		}
+		</script>
+		
+		</nav>
+
+	<article>
+	<!-- 
+				<div class="box3">
+				<p id= 'p15'>Personalnummer</p>
+				<input type=“text“ name=“Personalnummer“ size=“30“ maxlength=“50“ placeholder="Personalnummer eingeben">
+				<br>
+				<br>
+				<p id= 'p15'>Vorname</p>
+				<input type=“text“ name=“Vorname“ size=“30“ maxlength=“50“ placeholder="Vorname eingeben">
+				<br>
+				<br>
+				<p id= 'p15'>Nachname</p>
+				<input type=“text“ name=“Nachname“ size=“30“ maxlength=“50“ placeholder="Nachname eingeben">
+				<br>
+				<br>
+				<p id= 'p15'>Passwort</p>
+				<input type="password" id="pwd" name="pwd" minlength="8" placeholder="Passwort eingeben">
+				<br>
+				<br>
+				<p id= 'p15'>Passwort bestätigen</p>
+				<input type="password" id="pwd" name="pwd" minlength="8" placeholder="Passwort bestätigen">
+				<br>
+				<br>
+				<br>
+				</div>
+				<div class= "box4">
+						
+				<input class= "log" type="button" value="Konto erstellen" onclick="msg()">
+				<input class= "log" type="button" value="Löschen" onclick="msg()">
+				</div>
+				 -->
+								<br>
+				
+				<br>
+				<div class="box2">
+				<p id= 'p14'>Haben Sie Probleme? Scannen Sie den QR-Code und kontaktieren Sie uns.</p>
+				</div>
+		
+				<div class="box">
+				<img id='webmail' src="../bilder/qrcode.jpeg" width="150" alt="qr Tag von webmail">
+				</div>
+		
+
+	
+	</article>
+
+	<aside>
+	
+		
+		
+	
+	</aside>
+
+	<footer>
+	<p>Team Lakers 2021 </p>
+	</footer>
+</body>
+</html>
